@@ -1,0 +1,34 @@
+{
+    "name": "asika/cross-env",
+    "description": "Cross platform setting of environment scripts for PHP.",
+    "minimum-stability": "beta",
+    "type": "library",
+    "keywords": [
+        "cli", "command", "cross-env", "env"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Asika",
+            "email": "asika32764@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "symfony/process": "^3.0||^4.3"
+    },
+    "require-dev": {
+        "windwalker/utilities": "^3.0",
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.10"
+        }
+    },
+    "bin": [
+        "cross-env"
+    ]
+}
