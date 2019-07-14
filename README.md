@@ -48,6 +48,19 @@ composer run build:dev
 
 See https://getcomposer.org/doc/articles/scripts.md
 
+### Alias
+
+If you have installed node `cross-env` and has a prior order in PATH, 
+you can use `set-env` as an global alias.
+
+### Use `.env` File
+
+Call `cross-source` to set a file as env vars.
+
+```bash
+cross-course /path/.env php my-code.php
+```
+
 ## Programmatically Call
 
 If you want to use `cross-env` in your own CLI Application, you can use `CrossEnv\CrossEnv`:

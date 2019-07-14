@@ -3,7 +3,7 @@
  * Part of cross-env project.
  *
  * @copyright  Copyright (C) 2019 ${ORGANIZATION}.
- * @license    __LICENSE__
+ * @license    MIT
  */
 
 namespace CrossEnv\Test;

@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+/**
+ * Part of cross-env project.
+ *
+ * @copyright  Copyright (C) 2019 ${ORGANIZATION}.
+ * @license    MIT
+ */
+
+$autoload = __DIR__ . '/vendor/autoload.php';
+
+if (!is_file($autoload)) {
+    $autoload = __DIR__ . '/../../autoload.php';
+}
+
+require $autoload;
+
+$argv = $_SERVER['argv'];
+
+array_shift($argv);
+$file = array_shift($argv);
+
+if (!is_file($file)) {
+    throw new \RuntimeException('[cross-source] File: ' . $file . ' not found.');
+}
+
+$env = file_get_contents($file);
+$env = array_filter(array_map('trim', explode("\n", $env)), 'strlen');
+
+array_unshift($argv, ...$env);
+
+return \CrossEnv\CrossEnv::runWithArgs($argv);
