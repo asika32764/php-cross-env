@@ -19,8 +19,6 @@ class CrossEnv
     {
         $args = array_filter(array_map('trim', explode(' ', $command)), 'strlen');
 
-        array_unshift($args, 'cross-env');
-
         return static::runWithArgs($args, $outputHandler);
     }
 
