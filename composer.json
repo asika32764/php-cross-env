@@ -19,9 +19,22 @@
     },
     "require-dev": {
         "windwalker/utilities": "^3.0",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^6.5",
+        "windwalker/test": "^3.4"
+    },
+    "scripts": {
+        "test": "phpunit"
     },
     "autoload": {
+        "psr-4": {
+            "CrossEnv\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CrossEnv\\Test\\": "test/"
+        }
     },
     "config": {
         "platform": {
@@ -29,6 +42,7 @@
         }
     },
     "bin": [
-        "cross-env"
+        "cross-env",
+        "set-env"
     ]
 }

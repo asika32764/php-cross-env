@@ -8,5 +8,8 @@
 
 echo "HELLO\n\n";
 
-print_r($_SERVER);
-print_r($_ENV);
+foreach ($_SERVER as $key => $value) {
+    if (strpos($key, 'TEST_') === 0) {
+        echo "$key=$value\n";
+    }
+}

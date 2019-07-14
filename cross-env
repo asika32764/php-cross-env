@@ -7,7 +7,7 @@
  * @license    __LICENSE__
  */
 
-use Symfony\Component\Process\Process;
+use CrossEnv\CrossEnv;
 
 $autoload = __DIR__ . '/vendor/autoload.php';
 
@@ -18,72 +18,3 @@ if (!is_file($autoload)) {
 require $autoload;
 
 return (new CrossEnv())->run($_SERVER['argv']);
-
-class CrossEnv
-{
-    const ENV_SETTER_REGEX = '/(\w+)=(\'(.*)\'|"(.*)"|(.*))/';
-
-    public function run(array $argv): int
-    {
-        $this->parseArgv($argv, $envvars, $command);
-
-        $process = new Process($command);
-
-        if (!static::isWindows()) {
-            static::signals(
-                [
-                    SIGTERM,
-                    SIGINT,
-                    SIGBREAK,
-                    SIGHUP,
-                ],
-                static function (int $signal) use ($process) {
-                    $process->signal($signal);
-                }
-            );
-        }
-
-        return $process->run(static function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                fwrite(STDERR, $buffer);
-            } else {
-                fwrite(STDOUT, $buffer);
-            }
-        }, $envvars);
-    }
-
-    public static function signals(array $signals, callable $handler)
-    {
-        foreach ($signals as $signal) {
-            pcntl_signal((int) $signal, $handler);
-        }
-    }
-
-    public static function isWindows(): bool
-    {
-        return \DIRECTORY_SEPARATOR === '\\';
-    }
-
-    protected function parseArgv(array $argv, &$envvars = [], &$command = '')
-    {
-        array_shift($argv);
-
-        $args = [];
-
-        $key = null;
-
-        foreach ($argv as $i => $arg) {
-            $matched = (int) preg_match(static::ENV_SETTER_REGEX, $arg, $matches);
-
-            if ($matched) {
-                $value = $matches[5] ?? $matches[4] ?? $matches[3];
-
-                $envvars[$matches[1]] = $value;
-            } else {
-                $args[] = $arg;
-            }
-        }
-
-        $command = implode(' ', $args);
-    }
-}
