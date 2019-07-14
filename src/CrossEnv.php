@@ -10,7 +10,6 @@ use Symfony\Component\Process\Process;
  * @copyright  Copyright (C) 2019 ${ORGANIZATION}.
  * @license    MIT
  */
-
 class CrossEnv
 {
     const ENV_SETTER_REGEX = '/(\w+)=(\'(.*)\'|"(.*)"|(.*))/';
@@ -91,8 +90,11 @@ class CrossEnv
         return \DIRECTORY_SEPARATOR === '\\';
     }
 
-    protected function parseArgv(array $argv, &$env = [], &$command = '')
+    protected function parseArgv(array $argv, array &$env = null, string &$command = null)
     {
+        $env = [];
+        $command = '';
+
         array_shift($argv);
 
         $args = [];
