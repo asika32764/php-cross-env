@@ -41,8 +41,14 @@
             "php": "7.0.10"
         }
     },
+    "archive": {
+        "exclude": [
+            "test"
+        ]
+    },
     "bin": [
         "cross-env",
+        "cross-source",
         "set-env"
     ]
 }

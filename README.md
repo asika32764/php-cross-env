@@ -2,8 +2,6 @@
 
 Cross platform setting of environment scripts for PHP.
 
-This project is inspired by https://www.npmjs.com/package/cross-env
-
 ## Installation
 
 Install in project
@@ -20,11 +18,15 @@ composer global require asika/cross-env
 
 ## Usage
 
-Just call `cross-env` (If install globally):
+### Global Install
+
+Just call `cross-env`:
 
 ```bash
 cross-env APP_ENV=dev TEST_MODE=real php my-code.php
 ```
+
+### In Project
 
 If you install it in project, use composer scripts:
 
@@ -46,6 +48,12 @@ composer build:dev
 # OR
 
 composer run build:dev
+```
+
+You can also call bin file directly:
+
+```bash
+./vendor/bin/cross-env APP_ENV=dev TEST_MODE=real php my-code.php
 ```
 
 See https://getcomposer.org/doc/articles/scripts.md
