@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "symfony/process": "^3.0||^4.3"
+        "symfony/process": "^2.0||^3.0||^4.0"
     },
     "require-dev": {
         "windwalker/utilities": "^3.0",
