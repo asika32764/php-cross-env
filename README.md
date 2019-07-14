@@ -58,7 +58,7 @@ you can use `set-env` as an global alias.
 Call `cross-source` to set a file as env vars.
 
 ```bash
-cross-sourse /path/.env php my-code.php
+cross-source /path/.env php my-code.php
 ```
 
 ## Programmatically Call
