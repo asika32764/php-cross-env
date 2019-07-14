@@ -2,6 +2,8 @@
 
 Cross platform setting of environment scripts for PHP.
 
+This project is inspired by https://www.npmjs.com/package/cross-env
+
 ## Installation
 
 Install in project
