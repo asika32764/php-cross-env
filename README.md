@@ -58,7 +58,7 @@ you can use `set-env` as an global alias.
 Call `cross-source` to set a file as env vars.
 
 ```bash
-cross-course /path/.env php my-code.php
+cross-sourse /path/.env php my-code.php
 ```
 
 ## Programmatically Call
@@ -85,13 +85,16 @@ Add second argument as a callable.
 ```php
 use Symfony\Component\Process\Process;
 
-\CrossEnv\CrossEnv::runWithCommand('...', function (string $type, string $buffer) {
-    if ($type === Process::ERR) {
-        // Handle error
-    } else {
-        // Handle output
+\CrossEnv\CrossEnv::runWithCommand(
+    'APP_ENV=dev TEST_MODE=real php my-code.php',
+    function (string $type, string $buffer) {
+        if ($type === Process::ERR) {
+            // Handle error
+        } else {
+            // Handle output
+        }
     }
-})
+);
 ```
 
 See Symfony/Process: https://symfony.com/doc/current/components/process.html#usage
