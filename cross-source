@@ -29,4 +29,4 @@ $env = array_filter(array_map('trim', explode("\n", $env)), 'strlen');
 
 array_unshift($argv, ...$env);
 
-return \CrossEnv\CrossEnv::runWithArgs($argv);
+exit(\CrossEnv\CrossEnv::runWithArgs($argv));

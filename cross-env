@@ -17,4 +17,4 @@ if (!is_file($autoload)) {
 
 require $autoload;
 
-return (new CrossEnv())->run($_SERVER['argv']);
+exit((new CrossEnv())->run($_SERVER['argv']));

@@ -1,4 +1,4 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-return include_once __DIR__ . '/cross-env';
+include_once __DIR__ . '/cross-env';
