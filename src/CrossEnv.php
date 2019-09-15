@@ -33,6 +33,7 @@ class CrossEnv
         $this->parseArgv($argv, $env, $command);
 
         $process = new Process($command);
+        $process->setTimeout(0);
 
         if (!static::isWindows()) {
             static::signals(
