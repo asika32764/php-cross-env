@@ -75,7 +75,7 @@ class CrossEnv
     public static function signals(array $signals, callable $handler)
     {
         if (!function_exists('pcntl_signal')) {
-            return;
+        	throw new RuntimeException("For signals to work, you need to install the PCNTL extension (https://www.php.net/manual/book.pcntl.php)");
         }
 
         foreach ($signals as $signal) {

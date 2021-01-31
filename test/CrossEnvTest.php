@@ -10,6 +10,7 @@ namespace CrossEnv\Test;
 
 use CrossEnv\CrossEnv;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Windwalker\Test\Traits\BaseAssertionTrait;
 
 /**
@@ -58,9 +59,9 @@ TEXT;
         $result = <<<TEXT
 HELLO
 
+TEST_APP_ENV=dev
 TEST_NODE_ENV=production
 TEST_CLI_ENV=test
-TEST_APP_ENV=dev
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -88,9 +89,9 @@ TEXT;
         $result = <<<TEXT
 HELLO
 
+TEST_APP_ENV=dev
 TEST_NODE_ENV=production
 TEST_CLI_ENV=test
-TEST_APP_ENV=dev
 TEXT;
 
         self::assertStringSafeEquals('', StubCrossEnv::$output);
@@ -110,9 +111,9 @@ TEXT;
         $result = <<<TEXT
 HELLO
 
+TEST_APP_ENV=dev
 TEST_NODE_ENV=production
 TEST_CLI_ENV=test
-TEST_APP_ENV=dev
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -132,9 +133,9 @@ TEXT;
         $result = <<<TEXT
 HELLO
 
+TEST_APP_ENV=dev
 TEST_NODE_ENV=production
 TEST_CLI_ENV=test
-TEST_APP_ENV=dev
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -161,7 +162,10 @@ TEXT;
     {
         $handler = static function () {};
 
-        StubCrossEnv::signals([123, 321], $handler);
+	    if (StubCrossEnv::isWindows())
+		    self::expectException(RuntimeException::class);
+
+	    StubCrossEnv::signals([123, 321], $handler);
 
         self::assertEquals(StubCrossEnv::$signals[123], $handler);
         self::assertEquals(StubCrossEnv::$signals[321], $handler);
@@ -173,7 +177,7 @@ TEXT;
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->instance = new CrossEnv();
 
@@ -186,7 +190,7 @@ TEXT;
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 }
