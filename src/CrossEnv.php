@@ -2,6 +2,7 @@
 
 namespace CrossEnv;
 
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -30,6 +31,7 @@ class CrossEnv
 
     public function run(array $argv, callable $outputHandler = null): int
     {
+	    $command = [];
         $this->parseArgv($argv, $env, $command);
 
         $process = new Process($command);
@@ -73,7 +75,7 @@ class CrossEnv
     public static function signals(array $signals, callable $handler)
     {
         if (!function_exists('pcntl_signal')) {
-            return;
+        	throw new RuntimeException("For signals to work, you need to install the PCNTL extension (https://www.php.net/manual/book.pcntl.php)");
         }
 
         foreach ($signals as $signal) {
@@ -91,14 +93,11 @@ class CrossEnv
         return \DIRECTORY_SEPARATOR === '\\';
     }
 
-    protected function parseArgv(array $argv, array &$env = null, string &$command = null)
+    protected function parseArgv(array $argv, array &$env = null, array &$args = [])
     {
         $env = [];
-        $command = '';
 
         array_shift($argv);
-
-        $args = [];
 
         $key = null;
 
@@ -113,7 +112,5 @@ class CrossEnv
                 $args[] = $arg;
             }
         }
-
-        $command = implode(' ', $args);
     }
 }
