@@ -168,12 +168,18 @@ TEXT;
 
     public function testSignals()
     {
-        $handler = static function () {};
+        if (!function_exists('pcntl_signal')) {
+            self::markTestSkipped('pcntl_signal() not supported.');
+        }
 
-	    if (StubCrossEnv::isWindows())
-		    self::expectException(RuntimeException::class);
+        $handler = static function () {
+        };
 
-	    StubCrossEnv::signals([123, 321], $handler);
+        if (StubCrossEnv::isWindows()) {
+            self::expectException(RuntimeException::class);
+        }
+
+        StubCrossEnv::signals([123, 321], $handler);
 
         self::assertEquals(StubCrossEnv::$signals[123], $handler);
         self::assertEquals(StubCrossEnv::$signals[321], $handler);

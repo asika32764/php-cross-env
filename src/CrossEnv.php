@@ -26,18 +26,18 @@ class CrossEnv
     {
         array_unshift($args, 'cross-env');
 
-        return (new static)->run($args, $outputHandler);
+        return (new static())->run($args, $outputHandler);
     }
 
     public function run(array $argv, callable $outputHandler = null): int
     {
-	    $command = [];
+        $command = [];
         $this->parseArgv($argv, $env, $command);
 
         $process = new Process($command);
         $process->setTimeout(0);
 
-        if (!static::isWindows()) {
+        if (function_exists('pcntl_signal') && !static::isWindows()) {
             static::signals(
                 [
                     SIGTERM,
@@ -50,20 +50,23 @@ class CrossEnv
             );
         }
 
-        return $process->run($outputHandler ?: static function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                static::fwrite(STDERR, $buffer);
-            } else {
-                static::fwrite(STDOUT, $buffer);
-            }
-        }, $env);
+        return $process->run(
+            $outputHandler ?: static function ($type, $buffer) {
+                if (Process::ERR === $type) {
+                    static::fwrite(STDERR, $buffer);
+                } else {
+                    static::fwrite(STDOUT, $buffer);
+                }
+            },
+            $env
+        );
     }
 
     /**
      * fwrite() for test use.
      *
-     * @param resource $handle
-     * @param string   $text
+     * @param  resource  $handle
+     * @param  string    $text
      *
      * @return  bool|int
      */
@@ -75,7 +78,9 @@ class CrossEnv
     public static function signals(array $signals, callable $handler)
     {
         if (!function_exists('pcntl_signal')) {
-        	throw new RuntimeException("For signals to work, you need to install the PCNTL extension (https://www.php.net/manual/book.pcntl.php)");
+            throw new RuntimeException(
+                "For signals to work, you need to install the PCNTL extension (https://www.php.net/manual/book.pcntl.php)"
+            );
         }
 
         foreach ($signals as $signal) {
