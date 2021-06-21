@@ -31,11 +31,13 @@ class CrossEnvTest extends TestCase
 
     public function testRunWithoutEnv()
     {
-        $code = (new StubCrossEnv)->run([
-            'cross-env',
-            'php',
-            __DIR__ . '/test.php'
-        ]);
+        $code = (new StubCrossEnv())->run(
+            [
+                'cross-env',
+                'php',
+                __DIR__ . '/test.php',
+            ]
+        );
 
         $result = <<<TEXT
 HELLO
@@ -47,21 +49,23 @@ TEXT;
 
     public function testRunWithEnv()
     {
-        $code = (new StubCrossEnv)->run([
-            'cross-env',
-            'TEST_APP_ENV=dev',
-            'TEST_NODE_ENV="production"',
-            'TEST_CLI_ENV=\'test\'',
-            'php',
-            __DIR__ . '/test.php'
-        ]);
+        $code = (new StubCrossEnv())->run(
+            [
+                'cross-env',
+                'TEST_APP_ENV=dev',
+                'TEST_NODE_ENV="production"',
+                'TEST_CLI_ENV=\'test\'',
+                'php',
+                __DIR__ . '/test.php',
+            ]
+        );
 
         $result = <<<TEXT
 HELLO
 
 TEST_APP_ENV=dev
-TEST_NODE_ENV=production
 TEST_CLI_ENV=test
+TEST_NODE_ENV=production
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -72,14 +76,14 @@ TEXT;
     {
         $output = '';
 
-        $code = (new StubCrossEnv)->run(
+        $code = (new StubCrossEnv())->run(
             [
                 'cross-env',
                 'TEST_APP_ENV=dev',
                 'TEST_NODE_ENV="production"',
                 'TEST_CLI_ENV=\'test\'',
                 'php',
-                __DIR__ . '/test.php'
+                __DIR__ . '/test.php',
             ],
             static function (string $type, string $buffer) use (&$output) {
                 $output .= $buffer;
@@ -90,8 +94,8 @@ TEXT;
 HELLO
 
 TEST_APP_ENV=dev
-TEST_NODE_ENV=production
 TEST_CLI_ENV=test
+TEST_NODE_ENV=production
 TEXT;
 
         self::assertStringSafeEquals('', StubCrossEnv::$output);
@@ -112,8 +116,8 @@ TEXT;
 HELLO
 
 TEST_APP_ENV=dev
-TEST_NODE_ENV=production
 TEST_CLI_ENV=test
+TEST_NODE_ENV=production
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -122,20 +126,22 @@ TEXT;
 
     public function testRunWithArgs()
     {
-        $code = StubCrossEnv::runWithArgs([
-            'TEST_APP_ENV=dev',
-            'TEST_NODE_ENV="production"',
-            'TEST_CLI_ENV=\'test\'',
-            'php',
-            __DIR__ . '/test.php'
-        ]);
+        $code = StubCrossEnv::runWithArgs(
+            [
+                'TEST_APP_ENV=dev',
+                'TEST_NODE_ENV="production"',
+                'TEST_CLI_ENV=\'test\'',
+                'php',
+                __DIR__ . '/test.php',
+            ]
+        );
 
         $result = <<<TEXT
 HELLO
 
 TEST_APP_ENV=dev
-TEST_NODE_ENV=production
 TEST_CLI_ENV=test
+TEST_NODE_ENV=production
 TEXT;
 
         self::assertStringSafeEquals($result, StubCrossEnv::$output);
@@ -144,11 +150,13 @@ TEXT;
 
     public function testRunNotFound()
     {
-        $code = (new StubCrossEnv)->run([
-            'cross-env',
-            'php',
-            __DIR__ . '/foo.php'
-        ]);
+        $code = (new StubCrossEnv())->run(
+            [
+                'cross-env',
+                'php',
+                __DIR__ . '/foo.php',
+            ]
+        );
 
         self::assertEquals(1, $code);
     }

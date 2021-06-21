@@ -8,8 +8,14 @@
 
 echo "HELLO\n\n";
 
+$values = [];
+
 foreach ($_SERVER as $key => $value) {
     if (strpos($key, 'TEST_') === 0) {
-        echo "$key=$value\n";
+        $values[] = "$key=$value\n";
     }
 }
+
+sort($values);
+
+echo implode('', $values);
