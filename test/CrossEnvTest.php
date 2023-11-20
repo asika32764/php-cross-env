@@ -1,10 +1,6 @@
 <?php
-/**
- * Part of cross-env project.
- *
- * @copyright  Copyright (C) 2019 ${ORGANIZATION}.
- * @license    MIT
- */
+
+declare(strict_types=1);
 
 namespace CrossEnv\Test;
 
@@ -13,23 +9,13 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Windwalker\Test\Traits\BaseAssertionTrait;
 
-/**
- * The CrossEnvTest class.
- *
- * @since  {DEPLOY_VERSION}
- */
 class CrossEnvTest extends TestCase
 {
     use BaseAssertionTrait;
 
-    /**
-     * Test instance.
-     *
-     * @var object
-     */
-    protected $instance;
+    protected CrossEnv $instance;
 
-    public function testRunWithoutEnv()
+    public function testRunWithoutEnv(): void
     {
         $code = (new StubCrossEnv())->run(
             [
@@ -47,7 +33,7 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
-    public function testRunWithEnv()
+    public function testRunWithEnv(): void
     {
         $code = (new StubCrossEnv())->run(
             [
@@ -72,7 +58,7 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
-    public function testRunWithCallback()
+    public function testRunWithCallback(): void
     {
         $output = '';
 
@@ -103,7 +89,7 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
-    public function testRunWithCommand()
+    public function testRunWithCommand(): void
     {
         $code = StubCrossEnv::runWithCommand(
             sprintf(
@@ -124,7 +110,7 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
-    public function testRunWithArgs()
+    public function testRunWithArgs(): void
     {
         $code = StubCrossEnv::runWithArgs(
             [
@@ -148,7 +134,7 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
-    public function testRunNotFound()
+    public function testRunNotFound(): void
     {
         $code = (new StubCrossEnv())->run(
             [
@@ -161,12 +147,12 @@ TEXT;
         self::assertEquals(1, $code);
     }
 
-    public function testIsWindows()
+    public function testIsWindows(): void
     {
         self::assertEquals(CrossEnv::isWindows(), DIRECTORY_SEPARATOR === '\\');
     }
 
-    public function testSignals()
+    public function testSignals(): void
     {
         if (!function_exists('pcntl_signal')) {
             self::markTestSkipped('pcntl_signal() not supported.');
@@ -176,7 +162,7 @@ TEXT;
         };
 
         if (StubCrossEnv::isWindows()) {
-            self::expectException(RuntimeException::class);
+            $this->expectException(RuntimeException::class);
         }
 
         StubCrossEnv::signals([123, 321], $handler);

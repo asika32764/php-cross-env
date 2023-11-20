@@ -1,10 +1,6 @@
 <?php
-/**
- * Part of cross-env project.
- *
- * @copyright  Copyright (C) 2019 .
- * @license    MIT
- */
+
+declare(strict_types=1);
 
 namespace CrossEnv\Test;
 
@@ -24,12 +20,12 @@ class StubCrossEnv extends CrossEnv
     /**
      * fwrite() for test use.
      *
-     * @param resource $handle
-     * @param string   $text
+     * @param  resource  $handle
+     * @param  string    $text
      *
      * @return  bool|int
      */
-    protected static function fwrite($handle, string $text)
+    protected static function fwrite($handle, string $text): bool|int
     {
         static::$output .= $text;
 
@@ -43,7 +39,7 @@ class StubCrossEnv extends CrossEnv
         return true;
     }
 
-    public static function reset()
+    public static function reset(): void
     {
         static::$signals = [];
         static::$output = '';

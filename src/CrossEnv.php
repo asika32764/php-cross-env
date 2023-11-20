@@ -1,19 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace CrossEnv;
 
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
-/**
- * Part of cross-env project.
- *
- * @copyright  Copyright (C) 2019 ${ORGANIZATION}.
- * @license    MIT
- */
 class CrossEnv
 {
-    const ENV_SETTER_REGEX = '/\s*([A-Za-z\d_]+)=(\'(.*)\'|"(.*)"|([^ ]*))/';
+    public const ENV_SETTER_REGEX = '/\s*([A-Za-z\d_]+)=(\'(.*)\'|"(.*)"|([^ ]*))/';
 
     public static function runWithCommand(string $command, callable $outputHandler = null): int
     {
@@ -70,12 +66,12 @@ class CrossEnv
      *
      * @return  bool|int
      */
-    protected static function fwrite($handle, string $text)
+    protected static function fwrite($handle, string $text): bool|int
     {
         return fwrite($handle, $text);
     }
 
-    public static function signals(array $signals, callable $handler)
+    public static function signals(array $signals, callable $handler): void
     {
         if (!function_exists('pcntl_signal')) {
             throw new RuntimeException(
@@ -98,15 +94,13 @@ class CrossEnv
         return \DIRECTORY_SEPARATOR === '\\';
     }
 
-    protected function parseArgv(array $argv, array &$env = null, array &$args = [])
+    protected function parseArgv(array $argv, array &$env = null, array &$args = []): void
     {
         $env = [];
 
         array_shift($argv);
 
-        $key = null;
-
-        foreach ($argv as $i => $arg) {
+        foreach ($argv as $arg) {
             $matched = (int) preg_match(static::ENV_SETTER_REGEX, $arg, $matches);
 
             if ($matched) {
