@@ -15,13 +15,13 @@
     ],
     "require": {
         "php": ">=7.0||>=8.0",
-        "symfony/process": "^2.0||^3.0||^4.0||^5.0||^6.0"
+        "symfony/process": "^2.0||^3.0||^4.0||^5.0||^6.0||^7.0"
     },
     "require-dev": {
-        "windwalker/utilities": "^3.0",
+        "windwalker/utilities": "^4.0",
         "roave/security-advisories": "dev-master",
-        "phpunit/phpunit": "^6.5",
-        "windwalker/test": "^3.4"
+        "phpunit/phpunit": "^9.0||^10.0",
+        "windwalker/test": "^4.0"
     },
     "scripts": {
         "test": "phpunit"
@@ -34,11 +34,6 @@
     "autoload-dev": {
         "psr-4": {
             "CrossEnv\\Test\\": "test/"
-        }
-    },
-    "config": {
-        "platform": {
-            "php": "7.0.10"
         }
     },
     "archive": {
