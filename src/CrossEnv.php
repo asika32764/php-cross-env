@@ -13,7 +13,7 @@ use Symfony\Component\Process\Process;
  */
 class CrossEnv
 {
-    const ENV_SETTER_REGEX = '/(\w+)=(\'(.*)\'|"(.*)"|(.*))/';
+    const ENV_SETTER_REGEX = '/\s*([A-Za-z\d_]+)=(\'(.*)\'|"(.*)"|([^ ]*))/';
 
     public static function runWithCommand(string $command, callable $outputHandler = null): int
     {
