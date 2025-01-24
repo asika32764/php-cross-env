@@ -71,7 +71,7 @@ TEXT;
                 'php',
                 __DIR__ . '/test.php',
             ],
-            static function (string $type, string $buffer) use (&$output) {
+            static function (string $type, string $buffer) use (&$output): void {
                 $output .= $buffer;
             }
         );
@@ -158,7 +158,7 @@ TEXT;
             self::markTestSkipped('pcntl_signal() not supported.');
         }
 
-        $handler = static function () {
+        $handler = static function (): void {
         };
 
         if (StubCrossEnv::isWindows()) {
