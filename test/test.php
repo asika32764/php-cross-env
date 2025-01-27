@@ -11,7 +11,7 @@ echo "HELLO\n\n";
 $values = [];
 
 foreach ($_SERVER as $key => $value) {
-    if (strpos($key, 'TEST_') === 0) {
+    if (str_starts_with($key, 'TEST_')) {
         $values[] = "$key=$value\n";
     }
 }
