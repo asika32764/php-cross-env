@@ -1,5 +1,10 @@
 # PHP cross-env
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/asika32764/php-cross-env/ci.yml?style=for-the-badge)
+[![Packagist Version](https://img.shields.io/packagist/v/asika/cross-env?style=for-the-badge)
+](https://packagist.org/packages/asika/cross-env)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/asika/cross-env?style=for-the-badge)](https://packagist.org/packages/asika/cross-env)
+
 Cross platform setting of environment scripts for PHP.
 
 ## Installation
