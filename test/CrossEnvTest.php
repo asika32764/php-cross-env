@@ -58,6 +58,39 @@ TEXT;
         self::assertEquals(0, $code);
     }
 
+    public function testRunWithEnvAndParameters(): void
+    {
+        $code = (new StubCrossEnv())->run(
+            [
+                'cross-env',
+                'TEST_APP_ENV=dev',
+                'TEST_NODE_ENV="production"',
+                'TEST_CLI_ENV=\'test\'',
+                'php',
+                __DIR__ . '/test.php',
+                'main:go',
+                '--foo',
+                '--bar=baz',
+                '-f'
+            ]
+        );
+
+        $result = <<<TEXT
+HELLO
+
+TEST_APP_ENV=dev
+TEST_CLI_ENV=test
+TEST_NODE_ENV=production
+main:go
+--foo
+--bar=baz
+-f
+TEXT;
+
+        self::assertStringSafeEquals($result, StubCrossEnv::$output);
+        self::assertEquals(0, $code);
+    }
+
     public function testRunWithCallback(): void
     {
         $output = '';

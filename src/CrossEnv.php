@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 
 class CrossEnv
 {
-    public const ENV_SETTER_REGEX = '/\s*([A-Za-z\d_]+)=(\'(.*)\'|"(.*)"|([^ ]*))/';
+    public const ENV_SETTER_REGEX = '/\s*([A-Za-z\d_-]+)=(\'(.*)\'|"(.*)"|([^ ]*))/';
 
     public static function runWithCommand(string $command, ?callable $outputHandler = null): int
     {
@@ -103,9 +103,8 @@ class CrossEnv
         foreach ($argv as $arg) {
             $matched = (int) preg_match(static::ENV_SETTER_REGEX, $arg, $matches);
 
-            if ($matched) {
+            if ($matched && !str_starts_with($matches[1], '-')) {
                 $value = $matches[5] ?? $matches[4] ?? $matches[3];
-
                 $env[$matches[1]] = $value;
             } else {
                 $args[] = $arg;

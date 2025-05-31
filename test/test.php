@@ -18,4 +18,10 @@ foreach ($_SERVER as $key => $value) {
 
 sort($values);
 
+array_shift($argv);
+
+foreach ($argv as $k => $v) {
+    $values[] = $v . "\n";
+}
+
 echo implode('', $values);
