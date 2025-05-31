@@ -20,7 +20,7 @@
     "require-dev": {
         "windwalker/utilities": "^4.0",
         "roave/security-advisories": "dev-master",
-        "phpunit/phpunit": "^10.0||^11.0||^12.0",
+        "phpunit/phpunit": "^9.0||^10.0||^11.0||^12.0",
         "windwalker/test": "^4.0"
     },
     "scripts": {
